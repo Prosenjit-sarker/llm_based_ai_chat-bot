@@ -8,19 +8,19 @@ class ChatApiService {
   Future<String> fetchAssistantReply(List<MessageModel> messages) async {
     final response = await http
         .post(
-      Uri.parse('${AppStrings.baseUrl}/v1/chat/completions'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${AppStrings.apiKey}',
-      },
-      body: jsonEncode({
-        'model': AppStrings.model,
-        'messages': [
-          {"role": "system", "content": AppStrings.systemPrompt},
-          ...messages.map((message) => message.toApiMap()),
-        ],
-      }),
-    )
+          Uri.parse('${AppStrings.baseUrl}/v1/chat/completions'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${AppStrings.apiKey}',
+          },
+          body: jsonEncode({
+            'model': AppStrings.model,
+            'messages': [
+              {"role": "system", "content": AppStrings.systemPrompt},
+              ...messages.map((message) => message.toApiMap()),
+            ],
+          }),
+        )
         .timeout(Duration(seconds: 30));
 
     if (response.statusCode != 200) {

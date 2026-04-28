@@ -4,16 +4,16 @@ class MessageModel extends MessageEntity {
   MessageModel({required super.role, required super.text, required super.time});
   // sample -- > ui without macking a real api call
   factory MessageModel.sampleUser() => MessageModel(
-    role: 'user',
-    text: 'Hello! what can you help me with?',
-    time: DateTime.now(),
-  );
+        role: 'user',
+        text: 'Hello! what can you help me with?',
+        time: DateTime.now(),
+      );
   factory MessageModel.sampleBot() => MessageModel(
-    role: 'assistant',
-    text: 'Hi there! I am you AI assistant. Ask me anything',
-    time: DateTime.now(),
-  );
+        role: 'assistant',
+        text: 'Hi there! I am you AI assistant. Ask me anything',
+        time: DateTime.now(),
+      );
   // Converts to the format that api expects
-  Map<String, String> toApiMap()=> {'role': role, 'content': text,
-    'model': 'gpt-3.5-turbo'};
+  Map<String, String> toApiMap() =>
+      {'role': role, 'content': text, 'model': 'gpt-3.5-turbo'};
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../core/constans/app_colors.dart';
-import '../../core/constans/app_strings.dart';
-import 'chat_screen.dart';
+import 'package:llm_based_ai_chat_bot/core/constans/app_colors.dart';
+import 'package:llm_based_ai_chat_bot/core/constans/app_strings.dart';
+import 'package:llm_based_ai_chat_bot/presentation/screen/chat_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,17 +11,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnim;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     );
     _fadeAnim = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
@@ -30,12 +28,19 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animationController.forward();
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => ChatScreen()),
+        MaterialPageRoute(builder: (_) => const ChatScreen()),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,15 +51,14 @@ class _SplashScreenState extends State<SplashScreen>
         child: FadeTransition(
           opacity: _fadeAnim,
           child: Column(
-            spacing: 24,
-            mainAxisSize: .min,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 height: 100,
                 width: 100,
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
                   color: Colors.white.withValues(alpha: 0.2),
+                  shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.smart_toy_outlined,
@@ -62,12 +66,13 @@ class _SplashScreenState extends State<SplashScreen>
                   color: Colors.white,
                 ),
               ),
+              const SizedBox(height: 24),
               Text(
                 AppStrings.appName,
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ],

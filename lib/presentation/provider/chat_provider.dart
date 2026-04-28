@@ -1,15 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-
-import '../../core/constans/app_strings.dart';
-import '../../data/model/message_model.dart';
-import '../../data/service/chat_api_service.dart';
+import 'package:flutter/material.dart';
+import 'package:llm_based_ai_chat_bot/core/constans/app_strings.dart';
+import 'package:llm_based_ai_chat_bot/data/model/message_model.dart';
+import 'package:llm_based_ai_chat_bot/data/service/chat_api_service.dart';
 
 class ChatProvider extends ChangeNotifier {
   ChatProvider({ChatApiService? chatApiService})
-    : _chatApiService = chatApiService ?? ChatApiService();
+      : _chatApiService = chatApiService ?? ChatApiService();
 
   final ChatApiService _chatApiService;
   final List<MessageModel> _messages = [];
@@ -22,31 +21,32 @@ class ChatProvider extends ChangeNotifier {
 
   Future<void> sendMessage(String text) async {
     if (text.trim().isEmpty) return;
+
     _messages.add(MessageModel(role: 'user', text: text, time: DateTime.now()));
 
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
-    try{
-      final replayText = await _chatApiService.fetchAssistantReply(_messages);
+    try {
+      final replyText = await _chatApiService.fetchAssistantReply(_messages);
 
       _messages.add(
-        MessageModel(role: 'assistant', text: replayText, time: DateTime.now()),
+        MessageModel(role: 'assistant', text: replyText, time: DateTime.now()),
       );
-    }on TimeoutException{
+    } on TimeoutException {
       _errorMessage = AppStrings.errorTimeout;
-    }on SocketException{
+    } on SocketException {
       _errorMessage = AppStrings.errorNoInternet;
-    }catch(e){
+    } catch (e) {
       _errorMessage = AppStrings.errorGeneral;
-    }finally {
+    } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  void clearChat(){
+  void clearChat() {
     _messages.clear();
     _errorMessage = null;
     notifyListeners();
