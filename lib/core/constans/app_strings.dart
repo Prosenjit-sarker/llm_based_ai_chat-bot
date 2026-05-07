@@ -15,4 +15,14 @@ class AppStrings {
   static const String model = 'durjoy-kotha-1';
   static const String systemPrompt =
       'You are a helpful and friendly AI assistant.';
+
+
+
+
+  //Image generation API (open router)
+  // Image Generation API
+  static const String imageGenApiKey =
+      'REDACTED';
+  static const String imageGenBaseUrl = 'https://openrouter.ai/api/v1';
+  static const String imageGenModel = 'google/gemini-2.5-flash-image';
 }
