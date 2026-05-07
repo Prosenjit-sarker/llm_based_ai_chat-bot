@@ -14,6 +14,5 @@ class MessageModel extends MessageEntity {
         time: DateTime.now(),
       );
   // Converts to the format that api expects
-  Map<String, String> toApiMap() =>
-      {'role': role, 'content': text, 'model': 'gpt-3.5-turbo'};
+  Map<String, String> toApiMap() => {'role': role, 'content': text};
 }

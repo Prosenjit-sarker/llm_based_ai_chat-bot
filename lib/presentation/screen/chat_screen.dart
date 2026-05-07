@@ -3,6 +3,7 @@ import 'package:llm_based_ai_chat_bot/core/constans/app_colors.dart';
 import 'package:llm_based_ai_chat_bot/presentation/provider/chat_provider.dart';
 import 'package:llm_based_ai_chat_bot/presentation/widget/chat_input_field.dart';
 import 'package:llm_based_ai_chat_bot/presentation/widget/empty_chat.dart';
+import 'package:llm_based_ai_chat_bot/presentation/widget/error_banner.dart';
 import 'package:llm_based_ai_chat_bot/presentation/widget/message_bubble.dart';
 import 'package:provider/provider.dart';
 
@@ -40,6 +41,16 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
+        actions: [
+          Consumer<ChatProvider>(
+            builder: (context, provider, _) => IconButton(
+              tooltip: 'Clear',
+              onPressed:
+                  provider.messages.isEmpty ? null : () => provider.clearChat(),
+              icon: const Icon(Icons.delete_outline, color: Colors.white),
+            ),
+          ),
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -86,6 +97,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
           return Column(
             children: [
+              if (provider.errorMessage != null) ...[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                  child: ErrorBanner(
+                    message: provider.errorMessage!,
+                    onDismiss: provider.clearError,
+                  ),
+                ),
+              ],
               Expanded(
                 child: provider.messages.isEmpty && !provider.isLoading
                     ? EmptyChat()

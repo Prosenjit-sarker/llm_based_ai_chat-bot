@@ -51,4 +51,9 @@ class ChatProvider extends ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
   }
+
+  void clearError() {
+    _errorMessage = null;
+    notifyListeners();
+  }
 }

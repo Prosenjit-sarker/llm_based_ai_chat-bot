@@ -8,9 +8,12 @@ class AppStrings {
       'No internet connection. Please check and try again.';
   static const String errorTimeout = 'Request timed out. Please try again.';
   static const String errorGeneral = 'Something went wrong. Please try again.';
+  static const String errorMissingChatApiKey =
+      'Missing API key. Run with --dart-define=CHAT_API_KEY=YOUR_KEY';
 
   // API credentials
-  static const String apiKey = 'REDACTED';
+  static const String apiKey =
+      String.fromEnvironment('CHAT_API_KEY', defaultValue: '');
   static const String baseUrl = 'https://api.durjoyai.com';
   static const String model = 'durjoy-kotha-1';
   static const String systemPrompt =
@@ -22,7 +25,7 @@ class AppStrings {
   //Image generation API (open router)
   // Image Generation API
   static const String imageGenApiKey =
-      'REDACTED';
+      String.fromEnvironment('OPENROUTER_API_KEY', defaultValue: '');
   static const String imageGenBaseUrl = 'https://openrouter.ai/api/v1';
   static const String imageGenModel = 'google/gemini-2.5-flash-image';
 }

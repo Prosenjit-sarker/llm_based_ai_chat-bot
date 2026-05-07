@@ -6,6 +6,10 @@ import 'package:http/http.dart' as http;
 
 class ChatApiService {
   Future<String> fetchAssistantReply(List<MessageModel> messages) async {
+    if (AppStrings.apiKey.trim().isEmpty) {
+      throw Exception(AppStrings.errorMissingChatApiKey);
+    }
+
     final response = await http
         .post(
           Uri.parse('${AppStrings.baseUrl}/v1/chat/completions'),
