@@ -27,16 +27,16 @@ class ErrorBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          const Icon(Icons.error_outline, color: AppColors.error),
+          const Icon(Icons.error_outline, color: Colors.white),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               message,
-              style: const TextStyle(color: AppColors.error, fontSize: 14),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.close, color: AppColors.error),
+            icon: const Icon(Icons.close, color: Colors.white),
             onPressed: onDismiss,
           ),
         ],
